@@ -21,6 +21,26 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDqJ6CgDMa1XYmho5NDWVdCvNNkZWH2aO4",
+    authDomain: "myapp-534b4.firebaseapp.com",
+    databaseURL: "https://myapp-534b4.firebaseio.com",
+    projectId: "myapp-534b4",
+    storageBucket: "myapp-534b4.appspot.com",
+    messagingSenderId: "641935213613",
+    appId: "1:641935213613:web:eb64d677c905a5ca2f24a4"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {

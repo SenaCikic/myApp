@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_app/views/home/homeView.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,45 +12,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.blue,
+        textTheme: Theme.of(context).textTheme.apply(
+          fontFamily: 'Open Sans'
+        )
       ),
-      home: MyHomePage(title: 'Home Page',
-      ),
+      home: HomeView(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-         style: TextStyle(color: Colors.white ),
-         ),
-      ),
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-            image: new AssetImage('assets/images/background.jpg'),
-            fit: BoxFit.cover),
-          ),
-          child: null,
-        ),
-      ),
-    );
-  }
-}
