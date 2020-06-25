@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:web_app/locator.dart';
-import 'package:web_app/views/home/homeView.dart';
 import 'package:web_app/views/layoutTemplate/layoutTemplate.dart';
 
 void main() {
@@ -15,13 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: Theme.of(context).textTheme.apply(
-          fontFamily: 'Open Sans'
-        )
-      ),
+          primarySwatch: Colors.blue,
+          textTheme:
+              Theme.of(context).textTheme.apply(fontFamily: 'Open Sans')),
       home: LayoutTemplate(),
     );
   }
 }
-

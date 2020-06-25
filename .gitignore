@@ -46,3 +46,5 @@ app.*.map.json
 .packages
 .packages
 .packages
+
+pubspec.lock

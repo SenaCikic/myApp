@@ -4,8 +4,6 @@ import 'package:web_app/locator.dart';
 import 'package:web_app/routing/routeNames.dart';
 import 'package:web_app/routing/router.dart';
 import 'package:web_app/services/navigationService.dart';
-import 'package:web_app/views/home/homeContentDesktop.dart';
-import 'package:web_app/views/home/homeContentMobile.dart';
 import 'package:web_app/widgets/centeredView/centeredView.dart';
 import 'package:web_app/widgets/navigationBar/navigationBar.dart';
 import 'package:web_app/widgets/navigationDrawer/navigationDrawer.dart';

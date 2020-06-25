@@ -10,8 +10,8 @@ class CallToAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
-      desktop: CallToActionTabletDesktop(title),
-      mobile: CallToActionMobile(title)
+      mobile: CallToActionMobile(title),
+      tablet: CallToActionTabletDesktop(title),
     );
   }
 }

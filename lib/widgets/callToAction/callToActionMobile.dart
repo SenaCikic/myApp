@@ -16,8 +16,7 @@ class CallToActionMobile extends StatelessWidget {
             fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
       ),
       decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.circular(5)),
+          color: primaryColor, borderRadius: BorderRadius.circular(5)),
     );
   }
 }
