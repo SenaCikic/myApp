@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_app/routing/routeNames.dart';
-import 'package:web_app/widgets/navigationDrawer/drawerItem.dart';
+import 'package:web_app/widgets/navbarItem/navbarItem.dart';
 import 'package:web_app/widgets/navigationDrawer/navigationDrawerHeader.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -16,9 +16,9 @@ class NavigationDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           NavigationDrawerHeader(),
-          DrawerItem('Home', Icons.home, HomeRoute),
-          DrawerItem('Resume', Icons.person, ResumeRoute),
-          DrawerItem('Contact', Icons.contact_mail, ContactRoute)
+          NavBarItem('Home', HomeRoute, icon: Icons.home),
+          NavBarItem('Resume', ResumeRoute, icon: Icons.person),
+          NavBarItem('Contact', ContactRoute, icon: Icons.contact_mail)
         ],
       ),
     );
