@@ -7,6 +7,7 @@ import 'package:web_app/views/layoutTemplate/layoutTemplate.dart';
 
 void main() {
   setUpLocator();
+  setupUrlLocator();
   runApp(MyApp());
 }
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+        backgroundColor: Colors.lightBlue[50],
+          // primarySwatch: Colors.blue,
           textTheme:
               Theme.of(context).textTheme.apply(fontFamily: 'Open Sans')),
       builder: (context, child) => LayoutTemplate(

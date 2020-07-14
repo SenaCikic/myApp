@@ -12,13 +12,20 @@ class LayoutTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) => Scaffold(
+        // drawerEdgeDragWidth: 0, // THIS WAY IT WILL NOT OPEN ON SLIDE
         drawer: sizingInformation.deviceScreenType == DeviceScreenType.mobile
             ? NavigationDrawer()
             : null,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.lightGreen[50],
         body: CenteredView(
-          child: Column(
-              children: <Widget>[NavigationBar(), Expanded(child: child)]),
+          child: Column(children: <Widget>[
+            NavigationBar(),
+            Divider(
+              thickness: 3,
+              color: Colors.lightGreen[100],
+            ),
+            Expanded(child: child)
+          ]),
         ),
       ),
     );

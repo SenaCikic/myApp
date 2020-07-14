@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_app/models/resumeItemModel.dart';
+import 'package:web_app/views/resume/cvView.dart';
 import 'package:web_app/widgets/episodeList/resumeItem.dart';
 import 'package:web_app/extensions/hoverExtensions.dart';
 
@@ -7,13 +9,15 @@ class ResumeList extends StatelessWidget {
   final episodes = [
     ResumeItemModel(
       title: 'About me',
-      imageUrl: 'https://www.instagram.com/p/BnMguKght_J/',
+      imageUrl:
+          'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBAQEBAVEBAVECAbEBUVDRsQEA4WIB0iIiAdHx8kKDQsJCYxJx8fLTItMT1AMDAwIytKTT8uNzQ5MEABCgoKDQ0NFQ0OFSslFRkrKysrLS0rNy0rLS0tKystKysrLSsrLSsrKystKystKysrKysrKysrNysrKysrKystK//AABEIAMgAyAMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAADAAIEBQYBBwj/xAA8EAABAwIDBgQDBwIGAwEAAAABAAIRAyEEEjEFBkFRYXETIoGRMqGxFCNSwdHh8EJiBzNygpLxJEOTFv/EABkBAAMBAQEAAAAAAAAAAAAAAAECAwAEBf/EACIRAAICAwEBAAMBAQEAAAAAAAABAhEDEiExQRMiUTNhFP/aAAwDAQACEQMRAD8A9MhINRsi7lXccIINToTwxOyoGB5V2ETKllWCNAXQ1PATwELMMhKEYN9FU7ZxxYPKYAEucbKM8yjwtDC5dJrqgGpATgOPBeZYjeSqXGHyMwygixJNhp0Wg3ix5o0mMkipll0u1Poh+ahv/Pb9NYVxeK19vVmuzZjrYtff5FX+7+/jmuDK5zN0v8Q9f1VYzsnLA14z0ohNITMHi2VWh9NwcDyRyE9kKBEJpCMWppamTBQGFyEYtTS1GwUCLU3Kj5VzKiagJamlqPkXMqxqAlqSNlSWBRMyLuRGypZVz7FwOVKEXKllW2AChdyomVLKtsEYAuhPyqu23iCxoY3V2v8ApGvvYeqWUqVj447SoM7GsALiQGjmqDeXEsFHxqkXP3bXDyt5E8yoNbE5qrWOI8OmM1QzY/sshvFtepjqoItTaYpt4Ac+65Ixc5WzvdRVIr3YmXtNnQc122n9ICk7d2nUxFokxwEACNEfZ2yNC63RW7dntAsF08JdPPauHeLwVGcTxF+fFeh4jAA8FR7Q2QHAwIKbYXU5ufvW/CVA2oS6ifdv85L2XA4tlZgqU3BzSJBBlfOz6Ra4sdzWt3G3pdhKgpVHTQcbz/6zz7c/dMmQnC+nssLkLtF4eA5pkEWIXKlRrficB3KayFHMq5lT2Pa67SD2MruVGwAsqWVGyrmVbYILIuZUbKllW2BQLKuI2VJGzUTMq4Qs/V2+8iAA3rqqzEY5zrucXetlBJlTVvxdIGC8T3lNOOo/jCyOa0n0RGM4lHUBrW4mmdHt90Rr2nRw91laY7qQ3vJ7rahSNKI5hZHbuPAdVqk+WmIaOZH7/RWVOrla55/pbKxW92MNKixhPnd5ndCZj2uoZPdTrwRpORUfaz9nxFUnz1HwTPy9vzS2FhJAKh4wZcNSbxzeb6/mtFsJkMHZHxFatk6lQARQxHDU1zULGoi1KYVfiaKtagUHFVWN+IgJkwMxu8eAgeIBobqhnQrdbRDKlNwBBELDsbII4p4sjNHoO4+8jzTGGc4+UeS+o5fzgr/EvJk3K8q2XVLXAgkGbEcCvSdl4zxqQNg4Wd35+qpH05ska6h2HxNRjpa4gq7wu8LgIqNBMazCpjTJPbVMcz681VxTIJ0XlfeRw0Y2OpUf/wDS1Toxo9CqFziCQDZEpvGmhPPRbSg7WTsXt/EQYeR2aAoDsbWeZNR//wBCk6mTwhdFO1+CFUH0ecdVIh1V5bwBekgmheeKSWg2WdRnFdpAcpSDOZTwwJLY9DhM6dk8A6aIUtGp+aTsTysPmik2B0ifSaLfNEa4aSJVUHk3Mo9IXTaA3LipSaWZeB17aleX754g1cW6D5WiG+ll6i85aM9D/PovHq78+Ic4aZrdhx/mq4/ZtncuQRI2oQKdJvE1b9gAAtPsanDR2WSxxOXDDjlJ93FXNBjwyXYkU+wmPmE0vB4+mrhccs3gtoEOjx/FH+i3vK0GcOaDzCQp8KrH415OSkBP9Tjo1VjqlCmZqP8AEqcSTb0CkYySSBYTeDEhQH7I8R0hoa3kGpkK/wDhKFak8HK0aWICxlelkqkHTN8lvMHs1lJsALM7z4fK8OHEIxdCyXCnylrnR3H1+i2O6+Ly1WsddrxbuP2+iy1dnwO5iCrXYdQnwnA+YOBHcfz5qlkXE3r2FCfT/tcesaq1LJa10Wi1lCxYMzcLojKzjnGiLUwk8Mp6kBQ61Et1HrwUw0p4zZBLXN0VEyTI7ahHZScLSL9L8+iCKYJvp0tKsMKcoIYI+ZJSz8Gh0c/BEcIHzSRMQw5S5xPSOKSkuluFcHnnKMXE2nuggJwVaRC2dbIRabCmhEYiYM0I9BsmIQGKx2cyXCUsnSsaKt0P3kqeHhHAalsfqvIKAJfUdrAN+p0+vyXqW+7/ALgjgBPv/CvOMMyKU8XOk9houCPrZ6mv6objx56Y5NACl4XZz3ul3mEWB/p6qNWHnbK0+y6cgdk0nQ0Y2RqGzC3W95urjCtOQjqisopUh5TA4pU7YzRXPoS490ZlOEn0na6I+HfIBOqZtASYJzVlN7hOTsVsK0QslvK2S09UiYzXCmayaIPKD80fd9xD3D8Lp/nsls5s08vQhF3cpTUqd/Tj+iayDR62KE0mkAkxYcNVAxLoABuePRWWHrf+PSvc0hN7Sq+szUgLpx+dOPJ6Q26zEA6puIpjgFObhXGSFGIcJkesKuyI0V1RinbEBdmB0AkIVRoPCCpmGcKNM28x1Qm7VBgugNqYkHyibJKDUPmlcRjFJGcm2EaydBKM3DPP9Dv+JVpTxU6MI5ktThiCZ8r/APik3YdEVRokagjuERlI8j7K0Y4m/hxyMfqukuMgC3HzQt+Q2hAZSPI+ys9m04JJ1hcZhrSXz66KbhqIAEaTZJkn+pTHD9jM79vluXmVi8WIIA0Astjvjeo0a3WOxN3H+cVxwZ6bXCJtAxlMx5lotgYgOaIM9lmNr/AO/wCq7uzj8lTwyYDvh78lSSuNixlUqPRybIQJGhsmUXy2VFfUqSQSGjhAUEXoLXYNTqOJ4KMcWxupAXK1OfiehYfDDNmjTSVX4ZxomZpErPbbEx3V1VfErO7QrZnkC+UX7pUTZG2YyG/7kXYzMtd4mJBj3/dMwjoDOrz9EfDkNridCDPyTIlI3+Be51MN/C4i3C5P5o7MzR06oWAqZZ5OaD2MQu18bUYZDA9nE8V0Y5/DjyQ7YQ4svIEmTaxhOrNDREE9FWP2vTcTkolxAm15/NFZtvDvIZUBa4WhzZTtoRJj2kTLmgAc3SiHzaEQTwN019LDVRLHweEFBpYaJAqEt7SFtkCmdqYcxFvbNPskitBy3I9kkNmHUsW42vxDT/tSGLqalrf+IVczFu5ooxZ4gI6i7k8Y151aB/tC4cSZuB08gUE4h3CycMQeQW1NsWDa08R7KTRfKqG1ByCm4I8ORU8kajZTHK5IzW9gms0dfyWVqtv9Vr94/wDOE8P0WZxFKxPX9FxwZ6jXCl2yz7oH+5UFxBBgjTotPtWnNI9DKzrmLqg+HNkXTWbu7wh0U6pyv4Hg/wDdammQ4cwsNuxszxfHJbIbQJB/Cczbq52bXe206Lnmknw6MbbXTR/ZG6wh1gACo/2t0aqm2xXe4ESeqCYzIe3Ns38Old2k8GqtwjvLUOvDuUBlPzEo+GEYcniSSq1wi30NQtkJ4NJ9yiNfL2O6wfZR6roBA4Mj8kzBVc09HyFkhGz0XB1iRTIP9IDe/I/O6u8Ixhbm+GdRyPFVWyKYfhw3i0yDx1UzCh4mmYDtZ/F1+iyEl0Ji2MD6cHMHOhxt5AjGhS/GP+AUB2Fq+bzf6Z4IYwVUeZ1VxHIaKuhDevhaU8HRkaHrlUn7PT5gKkpUDNnOnqUdsixcSUjxM26/hYOosv8AeFvYrirn1Rokt+KX9NuiE1PC42mjBi67OWjgCcEgnthGzHWBWGAGqJhtngDPVOVvLQlDp7cw5qeBRguINwOXWVz5ZpppHTig7TKTeNnnceIFvZUbmAsPKZC0+2qc5j0WcwwlmXkuCJ6q8KzE4eQ4ayFn6uDgrY4yjAael+ipqrIc4HSbK8ZCSjZoty6AoUahqAZajYni2xj0P5Kur0Mr7aE2Vzsd7K+H8LxAx4Oh4/yBfoom0MFUpsa5wBaXWIIc3r80jts0WkAboqvHmSAOd1YF4jVV+KMQellkhmyiruAcpBpn7MB1/NQdpHQhT9nVRUoObxabq3w5n6QcdUhrjzMBC2c7Kc3IT3XMScwycv8AtLBumw/7PBOvBGej7oYnOwgG/LmFp61IZWuHleDB78P51Xmm7GP8Kq0zYGD2P7r1Bjm1mNc0zmFo0m9kjQLGsqA3Iuozibo9IXAIg/VR6wIsrwdnNkVAi4zKe9stkeqC8KTs/RwOnBUl/SSfaK9zjoki4uiWlJZUzOx7WhFDVyERgSDDRTUvZ2FBdmd8LRJnRDa1Z7ffaNSnRZTYSGPcfEjV0Rbtf5INvweEbZX7y7x1K9V7Kb4pA6i2ZXm5OyAxgxD/ADVKv+XNvLz6Lz3DPBeyAHy74To7ovYdi1M0ngGgNEfCFPJxF16R8fSseckH3WTy5KpboCVsNo1mhzr2zeboYWb2nSkngRoVwr074+EWqbwVn9sNfTMgS3j+qusQ8kAjVAxjmlsPsHDX8JVY+iy8M7h8Q7VpP5q6+01HMa1zi4AWE2ConU30KmsjgeassPjm8SAeqtqS3JABMckPHUi4COCfUxbfxjp5lFq7RYP6p7XR0N+RFNjcO4TxCDsyt4dQEnykQ79VIxuPL9BA5qvIHFOouiTmrD7VpFjjFgdCgbPf5o0JUptUOZ4bzJHwkiCRyUNjQHWcJB9Qh1AstqJyVZGhII+q3mwtqlh6TLhwJ5hYIu8zTpaxUzaO13U4Y0C48xLdQnjGyUpUeq4jbOGfkAqNa7WC7Kb8kyqGuAcDrx4LyfB48i5AMaSNOyuNm7wOpusfKdWzY/unjjrwSUrRuX0hzB7FPpyFCwGKZXZnpmRxHFp6qwoGLIy8Ir0Zi/M3qEk+qQeCSVMZlvUwLDwhRn4A8FPzruZDoCvpYJx4W4krCb97Yw73ClT+8e0Q+oDDOJIaO51Xoe05dQqsa7K51Nwa7kSCAV4XXYWkhwuDBS+svBJKyZsV7GVTVfdlNuYiJJJIAj3n0XqG6ONZWpOqsJc0vDRIIvx+q8y2Lhm1vEpFxY7yuaQJJiR7eZbfYNI4bA1AHBxp4nOY8s2Bj1hbJFuIya2I+29pPZi3U9Wl0EcInVV2N2uy4cYvbn6Kx3hqtrAVqZY58TYw98tt/Oi87rVnvdc8eS54Y7Ot5Ekaw4vyZjDmnkqvE4wgkWIHwmbEJPqZaNMT1PUSVTYDEHMWOu13yPRVjjQksnCecVwJDm8jYjsm1GsOjo6EKHi6GsKJSqkWKqo0Qcye6n1EdCozwea5cpZUyQjZwhDIRoTXNRoWwBvZFwOH8aqymRIF3HoP5C74Vlb7q4cZ3E6kR6cfyRUbBKVInYvZ4gGNBc8hCy1SoXOJPOy2+3ninh6h5iPdYUn34DkjSQsXaDuxOWwC6zFOOv0UdjeJTwEbCaLdjbBw9YSfu3WeOnP0XpkyJHovGKZ0Xq27mJ8XDUzqQMp9EJiE1zkl19M66JJAF5mTg5BBXQU1AKrezxhQNSjJLfjA1ycT6LyTFuLpdOpl36r3KbHsvNts7vB1RzqJDZN2n4fTl2UZSUXR04otxK3cPZpxGNa6D4NME1DwiIAnqvSMRsilh8JiPCBAcCSC7MGmOHFH3Y2M3CYVlC2YyahA1cf009FO2yQ2g8HSL3SSlZRRPPdgbqfaGNqPeRTk2HxEz7AKlxWymNfUpxBDzlkwddJ7ei9S2IaYw1MsILOH911g94KIp4l7DOUnM2L5Wk9ddPktFtujMosfhy1hEEENykEQW3WfyEOBgi+sLR47GzlptIs74nD4BGnXh7KNhH1BAYTZ0gi3AkhUXDPpNbsltSkyoaoYXGMpYTHf/pU+1tiVaXmcBHGDMXi4Wpw7i5niFxF5AADo01620UatUeySQC9wiRBA6fL+cWjIRoxzSRqitVtVwTHlpgMBESPhkan/AKUSvs57LwYJiDr/ACxVBCIV1reKJ9nfyi8eqRYQSDwN1gDSFL2Nj6NNzhUflPYqBiKkDrwUanhKj3fdtzGLxqjbXgPfS/3h2myqGtpuzt1J6qha26405RB1RGtPHU/JC7MlSOFOASbF4uUmAnVEw5pXo3+GG0Ie+idHNlvca/I/JedeEtBunivCxNB0i1SCOYNj8ihLqFo9mfB1EpJjikppCEUFOBQQU9pVAhXGx7LLURnrNHOoJ7StHinxTef7Vn9iNzVQeDQXfp8yFyZezO3ByBq6uIAfHILNb87TP2bwWXfVdAHEDioW8W2fCqlwMnLEToVlhizVmrUIMWbm05nRPGP0Vy+BqVSrSaGMe6W/EZIyA8b2g3si7WxgMNqXc3WID9bBzyLdo6KNgWlryQdKZe4DzNMNzNHoR0UMgmLgkmCZmJN/qqJdsWzoNJzovSdMgvcKtMnTzQBHzU7Z2EcwhrmnPmM/eBjB5bSdO3MFQMZhsoBDi4EwZgEG5nh1VnsbEF9IyAXUyACdHMM5Rys4AX4OWYSVg3FrjSuWirIA5ROkCfl6Jm2WODy6XQCMpc2Wk2tOg/ZTqFFtN3imSMswWhsA6RB1P80ULE4+qXFwqEXuA8loHKNPRD6ayuouLZMC7vQ9AFIbgXvGeoclMCSSQ13t1nirCgSWNdRpUmPu10tLSx8TIPUcLAQUDD1QalCu8l+VwBD3M8rTaco0iZTpiMiVqTaMuLcrcktBH3riZgHloTCzOJqZRJu4lW+2sWKtarUGhdDewsPkqOq3MZKcUjgE3NypezcSab839pC4GIGJZaywCPSdmIOvNSw0nX2Q9lYZzyGMEklb3Y+6rGgOred3L+kfqkckh1FsyWC2fUqfA0nrFvdXFDdtxu90dAFtBQawQ0ADsgVVKWRlY419My/YVNvMnqVR7UoOoEVGEwCtvWCo94KANCoeTZU1J2U1VG63O239rwzXEzUb5X9eR9VxY7/CGsfEr0+BpA+oP7pLoTOCUenobU8JJLWYjbWfFCoekKj2XiPDbWfqRTt7hJJcs/8AQ7cX+ZgsS99VxN3OMkwJ6lW2Ew7xRY0loOaMheJec2kTMLiSu2SSJGCqBmIeSCQdRPmIJII7wfooO0cC6kbkupn/AC3g+V44GeB58bJJJl6AgPrEm7iY0mPL1tH8Ks9nlraNRz9apAbe+Vs+b0dl9ikki0EnudkAaSTDRMuJJMTa/AWj9UXahaSzJBOXUfhtHH80kkrMMouy0CSJBxLQ4ZQTAa6bf7h7obBLa9MsdTaCbeGDkm4BJSSW+mMs4pmUJJKq8JnIUfEaJJLGNBuDQBL38Q6AvQGaJJLnl6dEFwFVKh1CkklY6IlUqo3idGFrH+2Pcgfmkkk+h+Ez/B3CH/yap0gMH1P0CSSS6DlZ/9k=',
     ),
     ResumeItemModel(
-        title: 'Traveling',
-        imageUrl: 'https://www.instagram.com/p/BnMguKght_J/'),
-    ResumeItemModel(
         title: 'Projects',
+        imageUrl:
+            'https://www.projectaccelerator.co.uk/wp-content/uploads/2016/08/Project-Management.jpg'),
+    ResumeItemModel(
+        title: 'Traveling',
         imageUrl: 'https://www.instagram.com/p/BnMguKght_J/'),
   ];
 
@@ -24,9 +28,29 @@ class ResumeList extends StatelessWidget {
       runSpacing: 30,
       children: <Widget>[
         ...episodes.map(
-          (episode) => ResumeItem(model: episode).moveUpOnHover,
+          (episode) => GestureDetector(
+              onTap: () {
+                if (episode.title == 'About me') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CvView()),
+                  );
+                } else if (episode.title == 'Projects') {
+                  _launchGithub();
+                }
+              },
+              child: ResumeItem(model: episode).moveUpOnHover),
         )
       ],
     );
+  }
+}
+
+_launchGithub() async {
+  const url = 'https://github.com/SenaCikic';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

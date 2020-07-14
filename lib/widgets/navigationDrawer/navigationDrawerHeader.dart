@@ -15,7 +15,7 @@ class NavigationDrawerHeader extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   color: Colors.white)),
           Text(
-            'TAP HERE',
+            '',
             style: TextStyle(color: Colors.white),
           )
         ]));

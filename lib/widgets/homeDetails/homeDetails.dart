@@ -9,7 +9,7 @@ class HomeDetails extends StatelessWidget {
     return ResponsiveBuilder(builder: (context, sizingInformation) {
       double widthR =
           sizingInformation.deviceScreenType == DeviceScreenType.desktop
-              ? 350
+              ? 500
               : 300; 
       var imgAlignment =
           sizingInformation.deviceScreenType == DeviceScreenType.desktop
@@ -18,7 +18,7 @@ class HomeDetails extends StatelessWidget {
       return Container(
         width: widthR,
         alignment: imgAlignment,
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

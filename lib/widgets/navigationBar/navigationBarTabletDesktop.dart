@@ -7,7 +7,7 @@ class NavigationBarTabletDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 80,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -19,10 +19,11 @@ class NavigationBarTabletDesktop extends StatelessWidget {
                 SizedBox(width: 60),
                 NavBarItem('Resume', ResumeRoute),
                 SizedBox(width: 60),
-                NavBarItem('Contact', ContactRoute)
+                NavBarItem('Contact and Social Media', ContactRoute)
               ],
             )
           ]),
+          
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_app/constants/colors.dart';
 import 'package:web_app/models/resumeDetailsModel.dart';
 import 'package:web_app/widgets/episodeList/resumeList.dart';
 import 'package:web_app/widgets/resumeDetails/resumeDetails.dart';
@@ -20,7 +21,7 @@ class ResumeView extends StatelessWidget {
           details: ResumeDetailsModel(
             title: 'About me',
             description:
-                'There you can read more about me and my projects',
+                'Here you can read more about me and my projects',
           ),
         ),
         SizedBox(
