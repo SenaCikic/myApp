@@ -18,11 +18,11 @@ class ContactView extends StatelessWidget {
       double paddingR =
           sizingInformation.deviceScreenType == DeviceScreenType.desktop
               ? 30
-              : 15; 
+              : 10; 
               double iconSize =
           sizingInformation.deviceScreenType == DeviceScreenType.desktop
               ? 70
-              : 30; 
+              : 20; 
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +42,7 @@ class ContactView extends StatelessWidget {
               color: Colors.blue,
               icon: Icon(Icons.mail),
               onPressed: () {
-                _service.sendEmail(number);
+                _service.sendEmail(email);
               },
             ),
             GestureDetector(

@@ -5,18 +5,17 @@ class CvView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(builder: (context, sizingInformation) {
-      // double paddingR =
-      //     sizingInformation.deviceScreenType == DeviceScreenType.desktop
-      //         ? 30
-      //         : 15;
-
+      double fontSize =
+          sizingInformation.deviceScreenType == DeviceScreenType.desktop
+              ? 30
+              : 10;
       return new ListView(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 600, bottom: 30, top: 100),
             child: Text(
               'WORK EXPERIENCE ',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w800),
             ),
           ),
           new ListTile(
@@ -62,7 +61,7 @@ class CvView extends StatelessWidget {
             padding: const EdgeInsets.only(right: 600, bottom: 30, top: 50),
             child: Text(
               'EDUCATION ',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w800),
             ),
           ),
           new ListTile(
@@ -79,7 +78,7 @@ class CvView extends StatelessWidget {
             padding: const EdgeInsets.only(right: 600, bottom: 30, top: 50),
             child: Text(
               'SKILLS ',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w800),
             ),
           ),
           new ListTile(
